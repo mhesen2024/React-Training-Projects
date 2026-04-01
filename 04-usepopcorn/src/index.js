@@ -7,8 +7,8 @@ import StartRating from './StartRating';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-<StartRating  />
-    {/* <App /> */}
+{/* <StartRating maxRating={5}  size={30} messages={["Terrible","Bad","Okay","Good","Amazing"]} className="" defaultRating={1}/> */}
+    <App />
   </React.StrictMode>
 );
 
