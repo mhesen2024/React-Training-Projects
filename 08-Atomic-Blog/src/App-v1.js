@@ -1,14 +1,13 @@
-import { createContext,  useEffect, useState } from "react";
+import { createContext, memo, useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
 import { usePosts, PostProvider } from "./PostContext";
 import Test from "./Test";
-
 
 function createRandomPost() {
   return {
     title: `${faker.hacker.adjective()} ${faker.hacker.noun()}`,
     body: faker.hacker.phrase(),
-  };  
+  };
 }
 function App() {
   const [isFakeDark, setIsFakeDark] = useState(false);
@@ -19,24 +18,23 @@ function App() {
       document.documentElement.classList.toggle("fake-dark-mode");
     },
     [isFakeDark],
-  ); 
+  );
 
   return (
     <section>
-        <button
-          onClick={() => setIsFakeDark((isFakeDark) => !isFakeDark)}
-          className="btn-fake-dark-mode"
-          >
-          {isFakeDark ? "☀️" : "🌙"}
-        </button>
-          <PostProvider>
-
+      <button
+        onClick={() => setIsFakeDark((isFakeDark) => !isFakeDark)}
+        className="btn-fake-dark-mode"
+      >
+        {isFakeDark ? "☀️" : "🌙"}
+      </button>
+      <PostProvider>
         <Header />
         <Main />
         <Archive />
         <Footer />
-    </PostProvider>
-      </section>
+      </PostProvider>
+    </section>
   );
 }
 
@@ -73,14 +71,14 @@ function Results() {
   return <p>🚀 {posts.length} atomic posts found</p>;
 }
 
-function Main() {
+const Main =  memo( function Main() {
   return (
     <main>
       <FormAddPost />
       <Posts />
     </main>
   );
-}
+})
 
 function Posts() {
   return (
@@ -125,15 +123,15 @@ function List() {
   const { posts } = usePosts();
   return (
     <>
-    <ul>
-      {posts.map((post, i) => (
-        <li key={i}>
-          <h3>{post.title}</h3>
-          <p>{post.body}</p>
-        </li>
-      ))}
-    </ul>
-    <Test/>
+      <ul>
+        {posts.map((post, i) => (
+          <li key={i}>
+            <h3>{post.title}</h3>
+            <p>{post.body}</p>
+          </li>
+        ))}
+      </ul>
+      <Test />
     </>
   );
 }
@@ -175,8 +173,6 @@ function Footer() {
 }
 
 export default App;
-
-
 
 /*
 import { memo, useEffect, useState } from "react";
@@ -317,7 +313,7 @@ function List() {
         ))}
       </ul>
 
-      {/* <Test /> }*//*
+      {/* <Test /> }*/ /*
     </>
   );
 }
