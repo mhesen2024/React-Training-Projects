@@ -10,14 +10,14 @@ function AccountOperations() {
   const [currency, setCurrency] = useState("USD");
   const loan = useSelector((state) => state.account.loan);
   const purpose = useSelector((state) => state.account.loanPurpose);
-
+  const loading = useSelector((state) => state.account.loading);
 
   const dispatch = useDispatch();
   function handleDeposit() {
     if (depositAmount <= 0) {
       return;
     }
-    dispatch(deposit(depositAmount, currency)); 
+    dispatch(deposit(depositAmount, currency));
     setDepositAmount("");
   }
 
@@ -66,7 +66,9 @@ function AccountOperations() {
             <option value="ILS">ILS</option>
           </select>
 
-          <button onClick={handleDeposit}>Deposit </button>
+          <button onClick={handleDeposit} disabled={loading}>
+            Deposit {loading ? "..." : ""}
+          </button>
         </div>
 
         <div>
@@ -76,34 +78,32 @@ function AccountOperations() {
             value={withdrawalAmount}
             onChange={(e) => setWithdrawalAmount(+e.target.value)}
           />
-          <button onClick={handleWithdrawal}>
-            Withdraw 
-          </button>
+          <button onClick={handleWithdrawal}>Withdraw</button>
         </div>
-        {loan === 0 ?(
-
+        {loan === 0 ? (
           <div>
-          <label>Request loan</label>
-          <input
-            type="number"
-            value={loanAmount}
-            onChange={(e) => setLoanAmount(+e.target.value)}
-            placeholder="Loan amount"
+            <label>Request loan</label>
+            <input
+              type="number"
+              value={loanAmount}
+              onChange={(e) => setLoanAmount(+e.target.value)}
+              placeholder="Loan amount"
             />
-          <input
-            value={loanPurpose}
-            onChange={(e) => setLoanPurpose(e.target.value)}
-            placeholder="Loan purpose"
+            <input
+              value={loanPurpose}
+              onChange={(e) => setLoanPurpose(e.target.value)}
+              placeholder="Loan purpose"
             />
-          <button onClick={handleRequestLoan}>Request loan</button>
-        </div>
-          ):(
-
-<div>
-          <span>Pay back {loan} {purpose} </span>
-          <button onClick={handlePayLoan}> Pay loan</button>
-        </div>)
-        }
+            <button onClick={handleRequestLoan}>Request loan</button>
+          </div>
+        ) : (
+          <div>
+            <span>
+              Pay back {loan} {purpose}{" "}
+            </span>
+            <button onClick={handlePayLoan}> Pay loan</button>
+          </div>
+        )}
       </div>
     </div>
   );
