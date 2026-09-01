@@ -1,4 +1,3 @@
-import React from 'react'
 import Header from './Header'
 import CartOverview from '../featuers/cart/CartOverview'
 import { Outlet, useNavigation } from 'react-router-dom'
@@ -8,15 +7,13 @@ export default function Applayout() {
   const navigation  = useNavigation();
   const isLoading = navigation.state === 'loading';
   return (
-    <div className='app-layout'>
-        <Header />
-        {isLoading && <Loader/>}
-        <main>
-            <h1>content</h1>
-            <Outlet />
-        </main>
-
-        <CartOverview/>
+    <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
+      <Header />
+      {isLoading && <Loader />}
+      <main className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-12">
+        <Outlet />
+      </main>
+      <CartOverview />
     </div>
   )
 }

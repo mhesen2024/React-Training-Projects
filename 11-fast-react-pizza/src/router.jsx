@@ -4,7 +4,8 @@ import Cart from "./featuers/cart/Cart.jsx";
 import Order , {loader as orderloader} from "./featuers/order/Order.jsx";
 import Menu,{loader as menuLoader } from "./featuers/menu/Menu.jsx";
 import Error from "./ui/Error.jsx";
-import CreateOrder from "./featuers/order/CreateOrder.jsx";
+import CreateOrder, { action as actionOrder } from "./featuers/order/CreateOrder.jsx";
+import { action as updateOrderAction } from "./featuers/order/UpdateOrder.jsx";
 // import OrderItem from "./featuers/order/OrderItem.jsx";
 import Applayout from "./ui/Applayout.jsx";
 
@@ -32,11 +33,13 @@ const router = createBrowserRouter([
   {
     path: "order/new",
     element: <CreateOrder />,
+    action: actionOrder,
   },
   {
-    path: "order",
+    path: "order/:id",
     element: <Order />,
     loader : orderloader,
+    action: updateOrderAction,
     errorElement: <Error />,
   },
   {
